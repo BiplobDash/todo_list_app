@@ -11,13 +11,16 @@ import 'item.dart';
 
 class ModelsController extends GetxController {
   RxList<GroceryItem> groceryItems = <GroceryItem>[].obs;
+  RxList<GroceryItem> searchItem = <GroceryItem>[].obs;
   RxBool isLoading = true.obs;
   RxString error = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
+    searchItem;
     loadItems();
+    update();
   }
 
   void showAlert(context) {
@@ -49,7 +52,7 @@ class ModelsController extends GetxController {
         return;
       }
       final Map<String, dynamic> listData = json.decode(response.body);
-      final List<GroceryItem> loadedItems = [];
+      final List<GroceryItem> loadedItems = <GroceryItem>[].obs;
       for (final item in listData.entries) {
         final category = categories.entries
             .firstWhere(
@@ -75,6 +78,7 @@ class ModelsController extends GetxController {
       return;
     }
     groceryItems.add(newItem);
+    update();
     showAlert(context);
   }
 
@@ -89,5 +93,6 @@ class ModelsController extends GetxController {
       // Optional : Show error Messge
       groceryItems.insert(index, item);
     }
+    update();
   }
 }

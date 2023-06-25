@@ -16,7 +16,7 @@ class NewItem extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.all(12),
           child: Form(
-            key: data.formKey,
+            key: data.formKey.value,
             child: Column(
               children: [
                 TextFormField(
@@ -98,14 +98,14 @@ class NewItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Obx(() => TextButton(
+                   TextButton(
                         onPressed: data.isSending.value
                             ? null
                             : () {
-                          data.formKey.currentState!.reset();
+                          data.formKey.value.currentState!.reset();
                         },
-                        child: const Text('Reset'))),
-                    Obx(() => ElevatedButton(
+                        child: const Text('Reset')),
+                    ElevatedButton(
                         onPressed: (){
                           data.isSending.value ? null : data.saveItem(context);
                         },
@@ -113,9 +113,8 @@ class NewItem extends StatelessWidget {
                             ? SizedBox(
                           height: 16,
                           width: 16,
-                          child: CircularProgressIndicator(),
-                        )
-                            : const Text('Add Item')))
+                          child: CircularProgressIndicator())
+                        :  Text('Add Item'))
                   ],
                 ),
               ],
